@@ -1,4 +1,4 @@
-package practicas
+package practica
 
 type Nodo struct {
 	valor int
@@ -163,39 +163,4 @@ func tieneUnHijo(n *Nodo) bool {
 		return true
 	}
 	return false
-}
-
-/*7️⃣ Verificar si el árbol es completo*/
-
-func (bst *BST) estaCompleto(n *Nodo) bool {
-	if bst.Root == nil {
-		return false
-	}
-
-	cola := []*Nodo{bst.Root}
-	hijoVacio := false
-
-	for len(cola) > 0 {
-		actual := cola[0]
-		cola = cola[1:]
-
-		if actual.left != nil {
-			if hijoVacio {
-				return false
-			}
-			cola = append(cola, actual.left)
-		} else {
-			hijoVacio = true
-		}
-
-		if actual.right != nil {
-			if hijoVacio {
-				return false
-			}
-			cola = append(cola, actual.right)
-		} else {
-			hijoVacio = true
-		}
-	}
-	return true
 }
