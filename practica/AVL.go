@@ -1,4 +1,12 @@
-package practica
+
+
+
+
+
+
+
+
+.package practica
 
 /*  Los Árboles de Búsqueda Binaria Balanceados o Árboles AVL (Adelson-Velsky y Landis) surgen para corregir una deficiencia crítica de los
 Árboles de Búsqueda Binaria (BST) estándar.En el peor caso (un árbol degenerado o sesgado), la complejidad computacional para recorrer un BST 
@@ -36,8 +44,30 @@ func (bst *BST) insertAVL( int valor ) {
 }
 
 func (bst *BST) insertAVLrec(n *Nodo, int val) *Nodo {
-	
+	 if n == nil {
+     return nil
+  }
+  if val <= n.valor {
+    n.left = bst.insertAVLrec(n.left, val)
+  }
+  if val >= n.valor {
+    n.rigth = bst.insertAVLrec(n.right,val)
+  }
+  return n
+} 
+
+func (bst *BST) alturaAceptable(n *Nodo) bool {
+  return (bst.height(n.left) - bst.height(n.rigth)) <= 1
 }
+
+
+func (bst *BST) estaDesbalanceado(n *Nodo) bool {
+   if n == nil {
+     return false
+   }
+  
+}
+
 
 
 /*Metodo Eliminar*/
