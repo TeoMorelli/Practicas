@@ -54,11 +54,29 @@ func (bst *BST) insertAVLrec(n *Nodo, val int) *Nodo {
 }
 
 func (bst *BST) rotarDerecha(n *Nodo) *Nodo {
-	next1 := n.left
-	next2 := next1.left
+ x := n.left
+ t := x.right
 
-	n = next1
-	next1 = n.right
+ x.right = n
+ n.left = t
+
+ n.altura = 1 + (bst.Height(n.left) -     bst.Height(n.right))
+ x.altura = 1 + (bst.Height(x.left) -   bst.Height(x.right))
+
+return x
+}
+
+func (bst *BST)  rotarIzquierda(n *Nodo) *Nodo {
+ x := n.right
+ t := x.left
+
+ x.left = n
+ n.left = t
+
+x.altura = 1 + (bst.Height(n.left) - bst.Height(n.right))
+n.altura = 1 + (bst.Height(n.left) - bst.Height(n.right))
+
+return x
 }
 
 func (bst *BST) estaBalanceado(n *Nodo) bool {
