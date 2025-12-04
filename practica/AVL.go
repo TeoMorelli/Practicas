@@ -1,23 +1,15 @@
-
-
-
-
-
-
-
-
-.package practica
+package practica
 
 /*  Los Árboles de Búsqueda Binaria Balanceados o Árboles AVL (Adelson-Velsky y Landis) surgen para corregir una deficiencia crítica de los
-Árboles de Búsqueda Binaria (BST) estándar.En el peor caso (un árbol degenerado o sesgado), la complejidad computacional para recorrer un BST 
-asciende a O(n), lo que equivale a recorrer una lista enlazada. 
-El objetivo de un AVL es asegurar que el tiempo de búsqueda se mantenga siempre en $O(\log n)$, lo que ofrece un 
+Árboles de Búsqueda Binaria (BST) estándar.En el peor caso (un árbol degenerado o sesgado), la complejidad computacional para recorrer un BST
+asciende a O(n), lo que equivale a recorrer una lista enlazada.
+El objetivo de un AVL es asegurar que el tiempo de búsqueda se mantenga siempre en O(log n), lo que ofrece un
 rendimiento mucho más rápido y predecible.
 
 ¿Qué Significa que un AVL Esté Balanceado?
 Un árbol AVL mantiene su eficiencia mediante un estricto criterio de balanceo:
-Factor de Balanceo: Para cada nodo del árbol, la diferencia absoluta entre la altura de su subárbol izquierdo (Hizq) y la altura 
-de su subárbol derecho (Hder) nunca debe ser mayor a 1.  Factor de Balanceo = |Hizq - Hder| <= 1 ,l Si este criterio se viola después de una 
+Factor de Balanceo: Para cada nodo del árbol, la diferencia absoluta entre la altura de su subárbol izquierdo (Hizq) y la altura
+de su subárbol derecho (Hder) nunca debe ser mayor a 1.  Factor de Balanceo = |Hizq - Hder| <= 1 ,l Si este criterio se viola después de una
 inserción o eliminación, el árbol se considera desbalanceado y debe ser reestructurado.
 
 Rotaciones para el BalanceoPara restaurar el balanceo tras una operación, los árboles AVL utilizan un sistema de rotaciones que reorganizan los nodos.
@@ -28,10 +20,10 @@ Las rotaciones se clasifican en cuatro tipos, dependiendo de la configuración d
 
 - Rotación Simple a la Izquierda (RR): Ocurre cuando se inserta un nodo en el subárbol derecho del subárbol derecho del nodo desbalanceado.
 
-- Rotación Doble Izquierda-Derecha (LR): Ocurre cuando se inserta un nodo en el subárbol derecho del subárbol izquierdo del nodo desbalanceado. 
+- Rotación Doble Izquierda-Derecha (LR): Ocurre cuando se inserta un nodo en el subárbol derecho del subárbol izquierdo del nodo desbalanceado.
 Esto requiere primero una rotación a la izquierda y luego una a la derecha.
 
-- Rotación Doble Derecha-Izquierda (RL): Ocurre cuando se inserta un nodo en el subárbol izquierdo del subárbol derecho del nodo desbalanceado. 
+- Rotación Doble Derecha-Izquierda (RL): Ocurre cuando se inserta un nodo en el subárbol izquierdo del subárbol derecho del nodo desbalanceado.
 Esto requiere primero una rotación a la derecha y luego una a la izquierda.
 */
 
@@ -39,36 +31,39 @@ Esto requiere primero una rotación a la derecha y luego una a la izquierda.
 Este metodo debe cumplir las propidades del AVL ademas de las rotaciones.
 */
 
-func (bst *BST) insertAVL( int valor ) {
-	bst.insertAVLrec(bst.root , valor)
+func (bst *BST) insertAVL(valor int) {
+	bst.Root = bst.insertAVLrec(bst.Root, valor)
 }
 
-func (bst *BST) insertAVLrec(n *Nodo, int val) *Nodo {
-	 if n == nil {
-     return nil
-  }
-  if val <= n.valor {
-    n.left = bst.insertAVLrec(n.left, val)
-  }
-  if val >= n.valor {
-    n.rigth = bst.insertAVLrec(n.right,val)
-  }
-  return n
-} 
-
-func (bst *BST) alturaAceptable(n *Nodo) bool {
-  return (bst.height(n.left) - bst.height(n.rigth)) <= 1
+func (bst *BST) insertAVLrec(n *Nodo, val int) *Nodo {
+	if n == nil {
+		return &Nodo{valor: val}
+	}
+	if val < n.valor {
+		n.left = bst.insertAVLrec(n.left, val)
+	} else if val > n.valor {
+		n.right = bst.insertAVLrec(n.right, val)
+	} else {
+		return n
+	}
+	n.altura = 1 + max(bst.Height(n.left), bst.Height(n.right))
+	balance := bst.Height(n.left) - bst.Height(n.right)
+	if balance < -1 && val < n.left.valor {
+		return bst.rotarDerecha(n)
+	}
 }
 
+func (bst *BST) rotarDerecha(n *Nodo) *Nodo {
+	next1 := n.left
+	next2 := next1.left
 
-func (bst *BST) estaDesbalanceado(n *Nodo) bool {
-   if n == nil {
-     return false
-   }
-  
+	n = next1
+	next1 = n.right
 }
 
-
+func (bst *BST) estaBalanceado(n *Nodo) bool {
+	return (bst.Height(n.left)-bst.Height(n.right)) <= 1 && (bst.Height(n.left)-bst.Height(n.right)) >= -1
+}
 
 /*Metodo Eliminar*/
 

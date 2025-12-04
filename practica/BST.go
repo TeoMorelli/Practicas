@@ -1,9 +1,10 @@
 package practica
 
 type Nodo struct {
-	valor int
-	left  *Nodo
-	right *Nodo
+	valor  int
+	left   *Nodo
+	right  *Nodo
+	altura int
 }
 
 type BST struct {
