@@ -48,9 +48,21 @@ func (bst *BST) insertAVLrec(n *Nodo, val int) *Nodo {
 	}
 	n.altura = 1 + max(bst.Height(n.left), bst.Height(n.right))
 	balance := bst.Height(n.left) - bst.Height(n.right)
-	if balance < -1 && val < n.left.valor {
+	if balance > 1 && val < n.left.valor {
 		return bst.rotarDerecha(n)
 	}
+	if blance < -1 && val > n.right.valor {
+		return bst.rotarIzquierda(n)
+	}
+	if balance > 1 && val > n.left.valor {
+		n.left = bst.rotarIzquierda(n.left)
+		bst.rotarDerecha(n)
+	}
+	if balance < -1 && val < n.ringth.valor {
+		n.right = bst.rotarDerecha(n.right)
+		bst.rotarIzquierda(n)
+	}
+	return n
 }
 
 func (bst *BST) rotarDerecha(n *Nodo) *Nodo {
@@ -60,8 +72,8 @@ func (bst *BST) rotarDerecha(n *Nodo) *Nodo {
  x.right = n
  n.left = t
 
- n.altura = 1 + (bst.Height(n.left) -     bst.Height(n.right))
- x.altura = 1 + (bst.Height(x.left) -   bst.Height(x.right))
+ n.altura = 1 + (bst.Height(n.left) -  bst.Height(n.right))
+ x.altura = 1 + (bst.Height(x.left) -  bst.Height(x.right))
 
 return x
 }
