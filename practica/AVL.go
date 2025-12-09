@@ -51,14 +51,14 @@ func (bst *BST) insertAVLrec(n *Nodo, val int) *Nodo {
 	if balance > 1 && val < n.left.valor {
 		return bst.rotarDerecha(n)
 	}
-	if blance < -1 && val > n.right.valor {
+	if balance < -1 && val > n.right.valor {
 		return bst.rotarIzquierda(n)
 	}
 	if balance > 1 && val > n.left.valor {
 		n.left = bst.rotarIzquierda(n.left)
 		bst.rotarDerecha(n)
 	}
-	if balance < -1 && val < n.ringth.valor {
+	if balance < -1 && val < n.right.valor {
 		n.right = bst.rotarDerecha(n.right)
 		bst.rotarIzquierda(n)
 	}
@@ -66,29 +66,29 @@ func (bst *BST) insertAVLrec(n *Nodo, val int) *Nodo {
 }
 
 func (bst *BST) rotarDerecha(n *Nodo) *Nodo {
- x := n.left
- t := x.right
+	x := n.left
+	t := x.right
 
- x.right = n
- n.left = t
+	x.right = n
+	n.left = t
 
- n.altura = 1 + (bst.Height(n.left) -  bst.Height(n.right))
- x.altura = 1 + (bst.Height(x.left) -  bst.Height(x.right))
+	n.altura = 1 + (bst.Height(n.left) - bst.Height(n.right))
+	x.altura = 1 + (bst.Height(x.left) - bst.Height(x.right))
 
-return x
+	return x
 }
 
-func (bst *BST)  rotarIzquierda(n *Nodo) *Nodo {
- x := n.right
- t := x.left
+func (bst *BST) rotarIzquierda(n *Nodo) *Nodo {
+	x := n.right
+	t := x.left
 
- x.left = n
- n.left = t
+	x.left = n
+	n.left = t
 
-x.altura = 1 + (bst.Height(n.left) - bst.Height(n.right))
-n.altura = 1 + (bst.Height(n.left) - bst.Height(n.right))
+	x.altura = 1 + (bst.Height(n.left) - bst.Height(n.right))
+	n.altura = 1 + (bst.Height(n.left) - bst.Height(n.right))
 
-return x
+	return x
 }
 
 func (bst *BST) estaBalanceado(n *Nodo) bool {
