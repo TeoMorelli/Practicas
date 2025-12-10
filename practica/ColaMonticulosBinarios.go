@@ -46,18 +46,23 @@ func (h *NodoHeap) Delete() int {
 
 // DownHeap, al estar primero, comparo con sus hijos. Si es menor se acomoda
 func (h *NodoHeap) downHeap(pos int) {
-	hijoDer := 2*pos + 1
-	hijoIzq := 2*pos + 2
-	for pos < len(h.datos) {
-		if hijoIzq <= len(h.datos)-1 {
-			if h.datos[pos] < h.datos[hijoIzq] {
-				h.datos[pos], h.datos[hijoIzq] = h.datos[hijoIzq], h.datos[pos]
-			}
+	for {
+		hijoIzq := 2*pos + 1
+		hijoDer := 2*pos + 2
+		mayor := pos
+
+		if hijoIzq < len(h.datos) && h.datos[hijoIzq] > h.datos[mayor] {
+			mayor = hijoIzq
 		}
-		if hijoDer <= len(h.datos)-1 {
-			if h.datos[pos] < h.datos[hijoDer] {
-				h.datos[pos], h.datos[hijoDer] = h.datos[hijoDer], h.datos[pos]
-			}
+		if hijoDer < len(h.datos) && h.datos[hijoDer] > h.datos[mayor] {
+			mayor = hijoDer
 		}
+
+		if mayor == pos {
+			break
+		}
+
+		h.datos[pos], h.datos[mayor] = h.datos[mayor], h.datos[pos]
+		pos = mayor
 	}
 }
