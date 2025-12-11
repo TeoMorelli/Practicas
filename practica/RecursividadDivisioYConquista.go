@@ -1,3 +1,4 @@
+
 package practica
 
 /*Contar dígitos de un número
@@ -104,7 +105,7 @@ func MaxDivisionConquista(arr []int, inicio int, fin int) int {
 
 //Ejemplo normal
 
-func ecnotrarMaxNormal(arr []int) int {
+func encontrarMaxNormal(arr []int) int {
 	max := arr[0]
 	for i := 1; i < len(arr); i++ {
 		if arr[i] > max {
@@ -114,13 +115,19 @@ func ecnotrarMaxNormal(arr []int) int {
 	return max
 }
 
-/*Como puedo recorrerlo ?
 
-arr[medio] + y - ?
+/*
+Contar inversiones en un arreglo
 
-arr[medio] == max. No esta
+Una inversión es un par (i, j) tal que:
 
-- Como guardo el valor de max ?
+i < j  y  arr[i] > arr[j]
 
-- Como lo encuentro si debe ser arr[i] > max ?
+
+Implementar un algoritmo divide y vencerás que cuente cuántas inversiones hay en un arreglo.
+
+Ejemplo:
+
+Input: [2, 4, 1, 3, 5]
+Output: 3
 */
