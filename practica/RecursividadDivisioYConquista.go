@@ -72,3 +72,55 @@ func busquedaBinaria(arr []int, x int, inicio int, fin int) int {
 		return busquedaBinaria(arr, x, medio+1, fin)
 	}
 }
+
+//Se llama asi, pos := busquedaBinaria(arr, x, 0, len(arr)-1)
+
+/*
+Encontrar el máximo en un arreglo usando División y Conquista
+
+Dividir el arreglo en mitades recursivamente y devolver el valor máximo.
+*/
+func EncontrarMaximo(arr []int) int {
+	if len(arr) == 0 {
+		return -1
+	}
+	return MaxDivisionConquista(arr, 0, len(arr)-1)
+}
+
+func MaxDivisionConquista(arr []int, inicio int, fin int) int {
+	if inicio == fin {
+		return arr[inicio]
+	}
+	medio := len(arr) / 2
+	maxIzquierda := MaxDivisionConquista(arr, inicio, medio)
+	maxDerecha := MaxDivisionConquista(arr, medio, fin)
+
+	if maxIzquierda > maxDerecha {
+		return maxIzquierda
+	}
+	return maxDerecha
+
+}
+
+//Ejemplo normal
+
+func ecnotrarMaxNormal(arr []int) int {
+	max := arr[0]
+	for i := 1; i < len(arr); i++ {
+		if arr[i] > max {
+			max = arr[i]
+		}
+	}
+	return max
+}
+
+/*Como puedo recorrerlo ?
+
+arr[medio] + y - ?
+
+arr[medio] == max. No esta
+
+- Como guardo el valor de max ?
+
+- Como lo encuentro si debe ser arr[i] > max ?
+*/
