@@ -131,3 +131,17 @@ Ejemplo:
 Input: [2, 4, 1, 3, 5]
 Output: 3
 */
+//Encontrar que valores de un arreglo ordenado se intercambiaron
+func inversiones(arr[], incio int, fin int) int {
+	if incio == fin {
+		return -1
+	}
+	
+
+}
+
+
+
+
+
+
