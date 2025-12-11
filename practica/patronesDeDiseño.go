@@ -114,8 +114,22 @@ type ForeignPayment interface {
     MakeTransaction(cents int) bool
 }
 
+type Adapter struct {
+    fo *ForeingPayment
+}
 
+func newAdapter(api *ForeingPayment) *Adapter {
+    return &Adapter{fo: api}
+}
 
+func (a *Adapter) pagar(monto float64) error {
+    monedas := int(monto * 100)
+    ok := a.fo.ForeingPayment(monedas)
+    if ok {
+        return nil
+    } 
+    return fmt.Errorf("fallo la transaccion de %d centavos (%.2f pesos)", centavos, monto)
+}
 
 
 
