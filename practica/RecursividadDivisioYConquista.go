@@ -38,6 +38,18 @@ Dada una grilla de tamaño n x m, contar recursivamente cuántas formas existen 
 */
 
 func caminos(mat [][]int) int {
+	return caminosHelper(mat, 0, 0)
+}
+
+func caminosHelper(mat [][]int, i int, j int) int {
+	//Primero condiciones: 1 - si se va del arreglo y 2 - Si llega al final
+	if i >= len(mat) || j >= len(mat[0]) {
+		return 0
+	}
+	if i == len(mat)-1 && j == len(mat[0])-1 {
+		return 1
+	}
+	return caminosHelper(mat, i+1, j) + caminosHelper(mat, i, j+1)
 }
 
 /*Búsqueda binaria recursiva
@@ -45,16 +57,18 @@ func caminos(mat [][]int) int {
 Implementar una búsqueda binaria de forma recursiva que devuelva la posición de un elemento en un arreglo ordenado.
 */
 
-func busquedaBinaria(arr []int, x int) int {
+func busquedaBinaria(arr []int, x int, inicio int, fin int) int {
+	if inicio > fin {
+		return -1
+	}
 	medio := len(arr) / 2
+
 	if arr[medio] == x {
 		return medio
 	}
-	if medio < x {
-		busquedaBinaria(arr[:medio], x)
+	if arr[medio] > x {
+		return busquedaBinaria(arr, x, inicio, medio-1)
+	} else {
+		return busquedaBinaria(arr, x, medio+1, fin)
 	}
-	if medio > x {
-		busquedaBinaria(arr[medio:], x)
-	}
-	return medio
 }
