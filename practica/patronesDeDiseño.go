@@ -131,7 +131,56 @@ func (a *Adapter) pagar(monto float64) error {
     return fmt.Errorf("fallo la transaccion de %d centavos (%.2f pesos)", centavos, monto)
 }
 
+/*1. COMPOSITE (3 ejercicios)
 
+Patrón para representar jerarquías recursivas de objetos, donde un composite contiene componentes, y todos exponen la misma interfaz.
+
+✅ Ejercicio 1 — Nivel Básico (Fácil)
+“Sistema de archivos simplificado”
+
+Implementar un Composite que represente:
+
+Archivo (hoja)
+
+Carpeta (nodo compuesto)
+
+Cada uno debe implementar la interfaz:
+
+type Component interface {
+    Nombre() string
+    Tamaño() int
+}
+
+
+Objetivo:
+Calcular el tamaño total de una carpeta (la suma recursiva de todos sus elementos).
+
+Restricción:
+No usar slices globales; solo composición recursiva.
+*/
+
+/*Ejercicio 2 — Nivel Medio
+“Estructura de menú de restaurante”
+
+Modelar un Composite con:
+
+Plato (leaf)
+
+Sección (composite)
+
+Cada Sección debe poder:
+
+listar todos los platos que contiene (recursivamente)
+
+obtener el precio más caro dentro de toda la sección
+
+Objetivo:
+Implementar un método:
+
+PrecioMaximo() float64
+
+
+que funcione recursivamente*/
 
 
 
