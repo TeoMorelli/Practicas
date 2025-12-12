@@ -384,6 +384,25 @@ Implementar un iterador que permita recorrer la matriz columna por columna.
 Los iteradores deben implementar la interfaz ‘Iterador’ definida anteriormente.
 */
 
+type Matriz struct {
+    Filas int
+    Columnas int
+    Datos [][]int
+}
+
+type Iterator interface{
+	HasNext() 
+	Next()
+}
+
+type MatrizIterator struct {
+	mat *Matriz
+	fil int
+	col int
+}
+
+
+
 /*
 Implementar un iterador para recorrer una lista enlazada doblemente, es decir que permita avanzar y retroceder en el recorrido de la lista.
 
