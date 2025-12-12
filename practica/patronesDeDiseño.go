@@ -283,7 +283,7 @@ func (s *Seccion) listarPlatos() string[] {
 func (s *Seccion) precioMaximo() float64{
 	max := 0
 	for _, m := s.hijos {
-		switch v := s.hijo(type) {
+		switch v := range s.hijo(type) {
 			case *Plato:
 				if v.Valor() > max {
 				max = v.valor()	
@@ -298,38 +298,131 @@ func (s *Seccion) precioMaximo() float64{
 	return max
 }
 
+/*
+El patron Iterator sirve para, recorrer elementos, de un conjunto sin necesidad se exponer su estructura interna. Algunos
+Metodos comunes son:
+
+Primero()
+Se posiciona el iterador en el primer elemento de la colección
+
+Siguiente()
+Avanza el iterador al siguiente elemento
+
+HaySiguiente()
+Devuelve true si todavía quedan elementos por recorrer en la colección o false en caso contario
+
+Actual()
+Devuelve el elemento actual donde está el iterador
+*/
+/*
+Ejercicio 7 — Nivel Básico
+“Iterator para un slice dinámico”
+
+Crear una colección propia:
+
+type Lista struct {
+    datos []int
+}
+
+
+Implementá:
+
+Next() int
+
+HasNext() bool
+
+Objetivo:
+Crear un iterador que recorra el slice sin devolver el slice original, solo desde la interfaz.
+*/
+
+type Iterator interface {
+	HasNext() bool
+	Next() int
+}
+
+type Lista struct {
+    datos []int
+}
+
+
+func (l *Lista) Iterador() Iterator {
+    return &listaIterator{
+        list: l,
+        pos:  0,
+    }
+}
+
+type listaIterator struct {
+	list *Lista
+	pos int
+}
+
+func (l *listaIterator) HasNext() bool {
+	return pos < len(l.list.datos) 
+}
+
+
+func (l *listaIterator) Next() int {
+	val := l.list.datos[l.pos]
+	l.pos++
+	return val
+}
+
 
 /*
-“Evaluador de expresiones matemáticas”
+Dada la siguiente definición de una matriz de números enteros:
 
-Representar expresiones como un Composite:
+type Matriz struct {
+    Filas int
+    Columnas int
+    Datos [][]int
+}
+Implementar un iterador que permita recorrer la matriz fila por fila.
 
-Nodo hoja: números
+Implementar un iterador que permita recorrer la matriz columna por columna.
 
-Nodo compuesto: operadores (+, -, *, /)
+Los iteradores deben implementar la interfaz ‘Iterador’ definida anteriormente.
+*/
 
-Ejemplo de árbol:
+/*
+Implementar un iterador para recorrer una lista enlazada doblemente, es decir que permita avanzar y retroceder en el recorrido de la lista.
 
-      (*)
-     /   \
-   (+)    5
-  /   \
- 2     3
+type IteradorDoble interface {
+    Anterior()
+    Siguiente()
+    HayAnterior() bool
+    HaySiguiente() bool
+}
+*/
+
+
+
+/*Ejercicio 9 — Nivel Difícil (ÁRBOLES)
+“Iterator en orden (in-order) para un árbol binario”
+
+Dado un árbol binario:
+
+type Nodo struct {
+    val   int
+    left  *Nodo
+    right *Nodo
+}
 
 
 Objetivo:
-Implementar:
+Implementar un Iterator que recorra el árbol en in-order, con las funciones:
 
-Eval() float64
+Next() int
 
+HasNext() bool
 
-que evalúe toda la expresión de forma recursiva.
+Restricción fuerte:
 
-Restricciones:
+No podés usar recursión dentro del iterador.
 
-Prohibido convertir a string o usar go/ast.
+Debés simular la recursión con una pila manual.
 
-Debe ser recursive traverse.
+Esto es exactamente lo que se usa en Java (BSTIterator) y es un ejercicio muy solicitado en entrevistas.
 */
 
 
