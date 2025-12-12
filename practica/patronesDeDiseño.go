@@ -166,6 +166,12 @@ type Component interface {
     Nombre() string
     Tamaño() int
 }
+
+Objetivo:
+Calcular el tamaño total de una carpeta (la suma recursiva de todos sus elementos).
+
+Restricción:
+No usar slices globales; solo composición recursiva.
 */
 
 type NodoP interface {
@@ -209,14 +215,6 @@ func (c *Carpeta) Add(n *NodoP) {
 	c.hijos = append(c.hijos, *n)
 }
 
-/*
-Objetivo:
-Calcular el tamaño total de una carpeta (la suma recursiva de todos sus elementos).
-
-Restricción:
-No usar slices globales; solo composición recursiva.
-*/
-
 /*Ejercicio 2 — Nivel Medio
 “Estructura de menú de restaurante”
 
@@ -239,3 +237,112 @@ PrecioMaximo() float64
 
 
 que funcione recursivamente*/
+
+type NodoR interface {
+	Nombre() string
+	Valor() float64
+}
+
+type Plato struct {
+	nombre string
+	valor float64
+}
+
+func (p *Plato) Nombre() string {
+	return p.nombre
+}
+
+func (p *Plato) Valor() float64 {
+	return p.valor
+}
+
+type Seccion struct {
+	nombres string
+	hijos []NodoR
+}
+
+func (s *Seccion) Nombre() string {
+	return s.nombre
+}
+
+func (s *Seccion) Valor() float64 {
+	total := 0
+	for _, t := s.hijos {
+		total += t.Valor()
+	}
+}
+
+func (s *Seccion) listarPlatos() string[] {
+	name := make(s.hijos, " ", len(s.hijos) - 1)
+	for i := 0; i < len(s.hijos); i++ {
+		name[i] = s.hijos[i].Nombre() 
+	}
+	return name
+}
+
+func (s *Seccion) precioMaximo() float64{
+	max := 0
+	for _, m := s.hijos {
+		switch v := s.hijo(type) {
+			case *Plato:
+				if v.Valor() > max {
+				max = v.valor()	
+			}
+			case *Carpeta:
+				precioHijo := v.precioMaximo()
+			if precioMaximo > max {
+				max = precioHijo
+			}
+		}
+	}
+	return max
+}
+
+
+/*
+“Evaluador de expresiones matemáticas”
+
+Representar expresiones como un Composite:
+
+Nodo hoja: números
+
+Nodo compuesto: operadores (+, -, *, /)
+
+Ejemplo de árbol:
+
+      (*)
+     /   \
+   (+)    5
+  /   \
+ 2     3
+
+
+Objetivo:
+Implementar:
+
+Eval() float64
+
+
+que evalúe toda la expresión de forma recursiva.
+
+Restricciones:
+
+Prohibido convertir a string o usar go/ast.
+
+Debe ser recursive traverse.
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
