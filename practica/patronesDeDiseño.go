@@ -245,7 +245,7 @@ type NodoR interface {
 
 type Plato struct {
 	nombre string
-	valor float64
+	valor  float64
 }
 
 func (p *Plato) Nombre() string {
@@ -257,8 +257,8 @@ func (p *Plato) Valor() float64 {
 }
 
 type Seccion struct {
-	nombres string
-	hijos []NodoR
+	nombre string
+	hijos  []NodoR
 }
 
 func (s *Seccion) Nombre() string {
@@ -266,31 +266,32 @@ func (s *Seccion) Nombre() string {
 }
 
 func (s *Seccion) Valor() float64 {
-	total := 0
-	for _, t := s.hijos {
+	total := 0.0
+	for _, t := range s.hijos {
 		total += t.Valor()
 	}
+	return total
 }
 
-func (s *Seccion) listarPlatos() string[] {
-	name := make(s.hijos, " ", len(s.hijos) - 1)
+func (s *Seccion) listarPlatos() []string {
+	name := make([]string, 0, len(s.hijos)-1)
 	for i := 0; i < len(s.hijos); i++ {
-		name[i] = s.hijos[i].Nombre() 
+		name[i] = s.hijos[i].Nombre()
 	}
 	return name
 }
 
-func (s *Seccion) precioMaximo() float64{
-	max := 0
-	for _, m := s.hijos {
-		switch v := range s.hijo(type) {
-			case *Plato:
-				if v.Valor() > max {
-				max = v.valor()	
+func (s *Seccion) PrecioMaximo() float64 {
+	max := 0.0
+	for _, hijo := range s.hijos {
+		switch v := hijo.(type) {
+		case *Plato:
+			if v.Valor() > max {
+				max = v.Valor()
 			}
-			case *Carpeta:
-				precioHijo := v.precioMaximo()
-			if precioMaximo > max {
+		case *Seccion:
+			precioHijo := v.PrecioMaximo()
+			if precioHijo > max {
 				max = precioHijo
 			}
 		}
@@ -341,33 +342,30 @@ type Iterator interface {
 }
 
 type Lista struct {
-    datos []int
+	datoss []int
 }
 
-
 func (l *Lista) Iterador() Iterator {
-    return &listaIterator{
-        list: l,
-        pos:  0,
-    }
+	return &listaIterator{
+		list: l,
+		pos:  0,
+	}
 }
 
 type listaIterator struct {
 	list *Lista
-	pos int
+	pos  int
 }
 
 func (l *listaIterator) HasNext() bool {
-	return pos < len(l.list.datos) 
+	return l.pos < len(l.list.datoss)
 }
 
-
 func (l *listaIterator) Next() int {
-	val := l.list.datos[l.pos]
+	val := l.list.datoss[l.pos]
 	l.pos++
 	return val
 }
-
 
 /*
 Dada la siguiente definición de una matriz de números enteros:
@@ -385,13 +383,13 @@ Los iteradores deben implementar la interfaz ‘Iterador’ definida anteriormen
 */
 
 type Matriz struct {
-    Filas int
-    Columnas int
-    Datos [][]int
+	Filas    int
+	Columnas int
+	Datos    [][]int
 }
 
-type Iterator interface{
-	HasNext() 
+type Iterator2 interface {
+	HasNext()
 	Next()
 }
 
@@ -400,8 +398,6 @@ type MatrizIterator struct {
 	fil int
 	col int
 }
-
-
 
 /*
 Implementar un iterador para recorrer una lista enlazada doblemente, es decir que permita avanzar y retroceder en el recorrido de la lista.
@@ -414,7 +410,54 @@ type IteradorDoble interface {
 }
 */
 
+type NodoB struct {
+	valor int
+	next  *NodoB
+	prev  *NodoB
+}
 
+type DoubleLinkedList struct {
+	head *NodoB
+	tail *NodoB
+	size int
+}
+
+type IteradorDoble interface {
+	Anterior()
+	Siguiente()
+	HayAnterior() bool
+	HaySiguiente() bool
+}
+
+type IteratorLista struct {
+	pos *NodoB
+}
+
+func (l *DoubleLinkedList) Iterator() *IteratorLista {
+	return &IteratorLista{pos: l.head}
+}
+
+func (I *IteratorLista) HaySiguiente() bool {
+	return I.pos.next != nil && I.pos != nil
+}
+
+func (I *IteratorLista) HayAnterior() bool {
+	return I.pos.prev != nil && I.pos != nil
+}
+
+func (I *IteratorLista) Siguiente() {
+	if !I.HaySiguiente() {
+		return
+	}
+	I.pos = I.pos.next
+}
+
+func (I *IteratorLista) Anterior() {
+	if !I.HayAnterior() {
+		return
+	}
+	I.pos = I.pos.prev
+}
 
 /*Ejercicio 9 — Nivel Difícil (ÁRBOLES)
 “Iterator en orden (in-order) para un árbol binario”
@@ -426,7 +469,6 @@ type Nodo struct {
     left  *Nodo
     right *Nodo
 }
-
 
 Objetivo:
 Implementar un Iterator que recorra el árbol en in-order, con las funciones:
@@ -444,17 +486,32 @@ Debés simular la recursión con una pila manual.
 Esto es exactamente lo que se usa en Java (BSTIterator) y es un ejercicio muy solicitado en entrevistas.
 */
 
+type NodoArbol struct {
+	val   int
+	left  *Nodo
+	right *Nodo
+}
 
+type ArbolBinario struct {
+	getRoot *NodoArbol
+}
 
+type IteratorArbol interface {
+	HasNext() bool
+	Next()
+}
 
+type ArbolIterator struct {
+	actual *NodoArbol
+}
 
+func (ab *ArbolBinario) ArbolPila() {
+	if ab.getRoot == nil {
+		return
+	}
 
+}
 
+func (at *ArbolIterator) HasNext() bool {
 
-
-
-
-
-
-
-
+}
