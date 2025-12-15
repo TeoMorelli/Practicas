@@ -486,10 +486,26 @@ Debés simular la recursión con una pila manual.
 Esto es exactamente lo que se usa en Java (BSTIterator) y es un ejercicio muy solicitado en entrevistas.
 */
 
+//Porque el Iterator de un arbol, se hace con recursion simulada ? Esto se debe a que el Iterador no expone el codigo, eso quiere decir que el iterator funciona aparte del arbol, por eso puedes tener varios iteradores a la ves (el arbol es inmutable ), ademas de descomponer en multimples funciones o incluso recorridos. Ahora la recursion convecional, no logra eso.
+
+//Para realizar la recurcion simulada, utilizamos la structura Stack, podria verse como algo asi:
+/*
+Recorrido Normal:
+- inOrder(n.left)
+- visit(n)
+- inOrder(n.right)
+Recorrido Stack:
+- push(nodo)
+- push(nodo.left)
+
+
+
+*/
+
 type NodoArbol struct {
 	val   int
-	left  *Nodo
-	right *Nodo
+	left  *NodoArbol
+	right *NodoArbol
 }
 
 type ArbolBinario struct {
@@ -498,20 +514,38 @@ type ArbolBinario struct {
 
 type IteratorArbol interface {
 	HasNext() bool
-	Next()
+	Next() int
 }
 
-type ArbolIterator struct {
+type InOrdenIterator struct {
+	stack  []*NodoArbol
 	actual *NodoArbol
 }
 
-func (ab *ArbolBinario) ArbolPila() {
-	if ab.getRoot == nil {
-		return
-	}
+//Un iterator debe recorrer el arbol sin afecta su estructura interna. Esto es posible gracias a la abstraccion que nos brinda el tipo interfaz de GO.
+//Entonces, Tengo la structura del arbol, La interfaz del iterator, la structura del iterator. Me falta Iterar sobre el arbol. Debo recorrerlo InOrden eso me dice que tengo que trasformarlo en un Queue. Ademas de crear el NewIterator
 
+func (ab *ArbolBinario) Iterator() IteratorArbol {
+	return &InOrdenIterator{
+		stack:  []*NodoArbol{},
+		actual: ab.getRoot,
+	}
 }
 
-func (at *ArbolIterator) HasNext() bool {
+func (it *InOrdenIterator) HasNext() bool {
+	return it.actual != nil || len(it.stack) > 0
+}
 
+func (it *InOrdenIterator) Next() int {
+	if it.actual != nil {
+		it.stack = append(it.stack, it.actual)
+		it.actual = it.actual.left
+	}
+	n := it.stack[len(it.stack)-1]
+	it.stack = it.stack[:len(it.stack)-1]
+
+	val := n.val
+	it.actual = n.right
+
+	return val
 }
