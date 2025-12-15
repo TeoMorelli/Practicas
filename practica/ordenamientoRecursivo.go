@@ -48,9 +48,9 @@ func QuickSort(arr []int, inicio int, fin int) {
 	if inicio >= fin {
 		return
 	}
-	mitad := Particionar(arr, inicio, fin)
-	QuickSort(arr, inicio, mitad-1)
-	QuickSort(arr, mitad+1, fin)
+	pivot := Particionar(arr, inicio, fin)
+	QuickSort(arr, inicio, pivot-1)
+	QuickSort(arr, pivot+1, fin)
 }
 
 func Particionar(arr []int, inicio int, fin int) int {
