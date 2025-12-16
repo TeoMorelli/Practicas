@@ -1,6 +1,6 @@
 package practica
 
-//Backtracjing es la soluciona a los problemas que no pueden resolverse, forzando por el alto costo computacion ni por greedy. Lo que se hace es la poda, eliminar caminos incorrectos tempranamente.
+//Backtraking es una tecnica de que se utiliza cunado el codigo no tiene una forma viable de implementarse, como aquellos algoritmo
 
 /*
 🟢 Ejercicio 1 — Fácil
@@ -31,6 +31,19 @@ backtracking puro
 */
 
 //Subconjuntos de un conjunto, La cantidad posible es de 2 elevado a la totalidad de elementos.
+
+func SubConjuntos(nums []int) [][]int {
+  
+  cantConjuntos := maht.Pow(2 , len(nums))
+  result := make([][]int, cantConjuntos)
+  index := 0
+  for i := 0 ; i < len(nums) ; i++ {
+    for j := 0; j < len(nums) ; j++ {
+    result[j][] = nums[i]
+    index ++
+    }
+  }
+}
 
 /*
 🟡 Ejercicio 2 — Normal
