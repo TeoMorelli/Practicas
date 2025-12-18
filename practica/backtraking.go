@@ -33,16 +33,27 @@ backtracking puro
 //Subconjuntos de un conjunto, La cantidad posible es de 2 elevado a la totalidad de elementos.
 
 func SubConjuntos(nums []int) [][]int {
-  
-  cantConjuntos := maht.Pow(2 , len(nums))
-  result := make([][]int, cantConjuntos)
-  index := 0
-  for i := 0 ; i < len(nums) ; i++ {
-    for j := 0; j < len(nums) ; j++ {
-    result[j][] = nums[i]
-    index ++
-    }
+  var result [][]int
+  var actual []int
+
+  var back func(i int)
+  back = func (i int) {
+      //Si i llegas a recorrer todo. Lo guardamos en el resultado
+      if i == len(nums)  {
+        copia := make([]int, len(actual)
+        copy(copia, actual)
+        result = append(resultado, copia)
+        return
+      }
+      //aumentamos el indice recursivamente
+      back(i+1)
+      //agregar elementos.
+      actual = append(actual, nums[i])
+      back(i+1)
+      actual = actual[:len(actual)-1]
   }
+  back(0)
+  return result
 }
 
 /*
@@ -52,7 +63,6 @@ Permutaciones de una lista
 Dada una lista de números distintos:
 
 [1, 2, 3]
-
 
 🎯 Objetivo:
 Generar todas las permutaciones posibles.
@@ -71,3 +81,6 @@ control de usados
 
 profundidad exacta
 */
+
+
+                      
